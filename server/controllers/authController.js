@@ -16,16 +16,16 @@ export const register = (req, res) => {
       req.body.email,
       hash
     ]
-  })
 
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err)
-    return res.status(200).json('User has been created')
+      db.query(q, [values], (err, data) => {
+        if (err) return res.json(err);
+        return res.status(200).json('User has been created');
+      })
   })
 }
 
 export const login = (req, res) => {
-
+  
 }
 
 export const logout = (req, res) => {

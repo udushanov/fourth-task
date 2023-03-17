@@ -15,6 +15,6 @@ export const db = mysql.createConnection({
   database: ''
 })
 
-app.listen(8080, () => {
+app.listen(8800, () => {
   console.log('The server is running')
 })
