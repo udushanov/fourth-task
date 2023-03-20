@@ -1,33 +1,30 @@
-import { db } from '../index.js'
-import bcrypt from 'bcryptjs'
+// import { db } from '../index.js'
+// import bcrypt from 'bcryptjs'
 
-export const register = (req, res) => {
-  const q = 'SELECT * FROM users WHERE email = ? OR username = ?'
-  db.query(q, (req.body.email, req.body.name), (err, date) => {
-    if (err) return res.json(err)
-    if (DataTransfer.length) return res.status(409).json('User already exist')
+// export const register = (req, res) => {
+//   const q = "SELECT * FROM users WHERE email = ? OR username = ?";
 
-    const salt = bcrypt.genSaltSync(10)
-    const hash = bcrypt.hashSync(req.body.password, salt)
+//   db.query(q, [req.body.email, req.body.username], (err, data) => {
+//     if (err) return res.status(500).json(err);
+//     if (data.length) return res.status(409).json("User already exists!");
 
-    const q = 'INSERT INTO users(`username`, `email`, `password`) VALUES (?)'
-    const values = [
-      req.body.username,
-      req.body.email,
-      hash
-    ]
+//     const salt = bcrypt.genSaltSync(10);
+//     const hash = bcrypt.hashSync(req.body.password, salt);
 
-      db.query(q, [values], (err, data) => {
-        if (err) return res.json(err);
-        return res.status(200).json('User has been created');
-      })
-  })
-}
+//     const q = "INSERT INTO users(`username`,`email`,`password`) VALUES (?)";
+//     const values = [req.body.username, req.body.email, hash];
 
-export const login = (req, res) => {
+//     db.query(q, [values], (err, data) => {
+//       if (err) return res.status(500).json(err);
+//       return res.status(200).json("User has been created.");
+//     });
+//   });
+// };
+
+// // export const login = (req, res) => {
   
-}
+// // }
 
-export const logout = (req, res) => {
+// export const logout = (req, res) => {
 
-}
+// }
