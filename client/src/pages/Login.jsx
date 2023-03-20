@@ -1,8 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-
+import { AuthContext } from "../context/AuthContext";
 
 export function Login() {
   const [inputs, setInputs] = useState({
@@ -13,6 +12,8 @@ export function Login() {
 
   const navigate = useNavigate()
 
+  const {login} = useContext(AuthContext)
+
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -21,19 +22,8 @@ export function Login() {
     e.preventDefault();
     try {
       setError("");
-      console.log("start");
-      await axios.post("http://localhost:8800/", {
-        ...inputs,
-        // regisrtydate: new Date().toISOString().slice(0, 19).replace("T", " "),
-        // lastlogineddate: new Date()
-        //   .toISOString()
-        //   .slice(0, 19)
-        //   .replace("T", " "),
-        // status: "unblocked",
-      });
-      console.log('end')
+      await login(inputs)
       navigate("/main");
-      localStorage.setItem('user', JSON.stringify(inputs))
     } catch (err) {
       setError(err.response.data);
     }

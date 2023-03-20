@@ -20,7 +20,7 @@ export function Register() {
     e.preventDefault();
     try {
       setError('')
-      const res = await axios.post("http://localhost:8800/register", {
+      await axios.post("http://localhost:8800/register", {
         ...inputs,
         regisrtydate: new Date().toISOString().slice(0, 19).replace("T", " "),
         lastlogineddate: new Date()
