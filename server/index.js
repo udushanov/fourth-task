@@ -84,6 +84,10 @@ app.get("/main", (req, res) => {
   });
 });
 
+app.post("/main", (req, res) => {
+  res.status(200).json('User has been logged out')
+});
+
 app.listen(process.env.PORT || 8800, () => {
   console.log("The server is running");
 });

@@ -1,9 +1,24 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
-import { Form, Row, Col, Container, Table } from "react-bootstrap";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import {
+  Form,
+  Row,
+  Col,
+  Container,
+  Table,
+  Navbar,
+  Nav,
+  Button,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export function Main() {
   const [users, setUsers] = useState([]);
+
+  const { logout } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUsers = async () => {
@@ -22,7 +37,7 @@ export function Main() {
     const { name, checked } = e.target;
     if (name === "selectAll") {
       let tempUser = users.map((user) => ({ ...user, isChecked: checked }));
-      setUsers(tempUser)
+      setUsers(tempUser);
     } else {
       let tempUser = users.map((user) =>
         user.id.toString() === name ? { ...user, isChecked: checked } : user
@@ -31,9 +46,44 @@ export function Main() {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await logout();
+    navigate("/");
+  };
+
+  const logged = () => {
+    if (JSON.parse(localStorage.getItem("user"))) {
+      return JSON.parse(localStorage.getItem("user"))?.username;
+    }
+
+    return "";
+  };
+
   return (
     <>
-      <Container className="mt-3">
+      <Navbar
+        bg="warning"
+        expand="lg"
+        className="position-absolute top-0 start-0 end-0 d-flex justify-content-end align-items-center"
+      >
+        <h5 className="me-3">{logged()}</h5>
+        <Button
+          className="me-5"
+          onClick={handleSubmit}
+          variant="outline-secondary"
+        >
+          Log out
+        </Button>
+      </Navbar>
+      <Container style={{ marginTop: "80px" }}>
+        <Row>
+          <Col className="d-flex justify-content-end gap-2">
+            <Button>Block</Button>
+            <Button variant="success">Unblock</Button>
+            <Button variant="danger">Delete</Button>
+          </Col>
+        </Row>
         <Row>
           <Col>
             <h3 className="text-center mb-3">User list</h3>
@@ -48,7 +98,10 @@ export function Main() {
                     <Form.Check
                       type="checkbox"
                       name="selectAll"
-                      checked={users.filter(user => user.isChecked !== true).length < 1}
+                      checked={
+                        users.filter((user) => user.isChecked !== true).length <
+                        1
+                      }
                       onChange={handleChange}
                     />
                     <div>Select all</div>

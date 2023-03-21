@@ -8,15 +8,20 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user") || null)
   );
 
+  // const [auth, setAuth] = useState(
+  //   JSON.parse(localStorage.getItem("auth") || false)
+  // );
+
   const login = async (inputs) => {
     const res = await axios.post("http://localhost:8800/", inputs);
     setCurenntUser(res.data);
+    localStorage.setItem("auth", true);
   };
 
-  const logout = async (inputs) => {
-    await axios.post("http://localhost:8800/logout", inputs);
-
+  const logout = async () => {
+    await axios.post("http://localhost:8800/main");
     setCurenntUser(null);
+    localStorage.setItem("auth", false);
   };
 
   useEffect(() => {
@@ -26,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
         .slice(0, 19)
         .replace("T", " ");
       await axios.patch("http://localhost:8800/", {
-        id: curenntUser.id,
+        id: curenntUser?.id,
         lastlogineddate,
       });
     };
