@@ -25,7 +25,6 @@ export const AuthContextProvider = ({ children }) => {
         .toISOString()
         .slice(0, 19)
         .replace("T", " ");
-      console.log({ id: curenntUser.id, lastlogineddate });
       await axios.patch("http://localhost:8800/", {
         id: curenntUser.id,
         lastlogineddate,
