@@ -9,12 +9,8 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   const login = async (inputs) => {
-    try {
-      const res = await axios.post("http://localhost:8800/", inputs);
-      setCurenntUser(res.data);
-    } catch (err) {
-      console.log(err);
-    }
+    const res = await axios.post("http://localhost:8800/", inputs);
+    setCurenntUser(res.data);
   };
 
   const logout = async (inputs) => {
@@ -34,9 +30,9 @@ export const AuthContextProvider = ({ children }) => {
         id: curenntUser.id,
         lastlogineddate,
       });
-    }
-    
-    patchUser()
+    };
+
+    patchUser();
 
     localStorage.setItem("user", JSON.stringify(curenntUser));
   }, [curenntUser]);
