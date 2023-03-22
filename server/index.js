@@ -9,10 +9,10 @@ app.use(cors());
 dotenv.config();
 
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  host: "containers-us-west-17.railway.app",
+  user: "root",
+  password: "n7OAQdKkmhVlwkJkW2We",
+  database: "railway",
 });
 
 app.get("/", (req, res) => {
