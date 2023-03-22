@@ -9,13 +9,16 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   const login = async (inputs) => {
-    const res = await axios.post("http://localhost:8800/", inputs);
+    const res = await axios.post(
+      `${proccess.env.REACT_APP_SERVER_URL}/`,
+      inputs
+    );
     setCurenntUser(res.data);
     localStorage.setItem("auth", true);
   };
 
   const logout = async () => {
-    await axios.post("http://localhost:8800/main");
+    await axios.post(`${proccess.env.REACT_APP_SERVER_URL}/main`);
     setCurenntUser(null);
     localStorage.setItem("auth", false);
   };
@@ -26,7 +29,7 @@ export const AuthContextProvider = ({ children }) => {
         .toISOString()
         .slice(0, 19)
         .replace("T", " ");
-      await axios.patch("http://localhost:8800/", {
+      await axios.patch(`${proccess.env.REACT_APP_SERVER_URL}/`, {
         id: curenntUser?.id,
         lastlogineddate,
       });

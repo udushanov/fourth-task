@@ -23,7 +23,9 @@ export function Main() {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/main");
+        const res = await axios.get(
+          `${proccess.env.REACT_APP_SERVER_URL}/main`
+        );
         if (res.data.length === 0) {
           navigate("/");
         }
@@ -79,7 +81,7 @@ export function Main() {
     try {
       users.forEach(async (user) => {
         if (user.isChecked) {
-          await axios.patch("http://localhost:8800/main", {
+          await axios.patch(`${proccess.env.REACT_APP_SERVER_URL}/main`, {
             id: user.id,
             status: "blocked",
           });
@@ -99,7 +101,7 @@ export function Main() {
     try {
       users.forEach(async (user) => {
         if (user.isChecked) {
-          await axios.patch("http://localhost:8800/main", {
+          await axios.patch(`${proccess.env.REACT_APP_SERVER_URL}/main`, {
             id: user.id,
             status: "unblocked",
           });
@@ -120,7 +122,7 @@ export function Main() {
       users.forEach(async (user) => {
         if (user.isChecked) {
           const data = { id: user.id };
-          await axios.delete("http://localhost:8800/main", {
+          await axios.delete(`${proccess.env.REACT_APP_SERVER_URL}main`, {
             data,
           });
 
