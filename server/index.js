@@ -5,7 +5,7 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(cors());
-require("dotenv").config();
+// require("dotenv").config();
 
 // const urlDB = `mysql://${process.env.MYSQLUSER}:${process.env.MYSQLPASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQLDATABASE}`;
 const db = mysql.createConnection({
@@ -114,6 +114,6 @@ app.delete("/main", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || 8800, () => {
+app.listen(6022 || 8800, () => {
   console.log("The server is running");
 });
