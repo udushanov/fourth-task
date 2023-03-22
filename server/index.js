@@ -1,18 +1,19 @@
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
+import dotenv from 'dotenv'
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-// require("dotenv").config();
+dotenv.config();
 
 // const urlDB = `mysql://${process.env.MYSQLUSER}:${process.env.MYSQLPASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQLDATABASE}`;
 const db = mysql.createConnection({
-  host: "containers-us-west-17.railway.app",
-  user: "root",
-  password: "n7OAQdKkmhVlwkJkW2We",
-  database: "railway",
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
 });
 
 app.get("/", (req, res) => {
@@ -114,6 +115,6 @@ app.delete("/main", (req, res) => {
   });
 });
 
-app.listen(6022 || 8800, () => {
+app.listen(process.env.MYSQLPORT || 8800, () => {
   console.log("The server is running");
 });
