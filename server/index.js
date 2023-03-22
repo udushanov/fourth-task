@@ -7,8 +7,13 @@ app.use(express.json());
 app.use(cors());
 require("dotenv").config();
 
-const urlDB = `mysql://${process.env.MYSQLUSER}:${process.env.MYSQLPASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQLDATABASE}`;
-const db = mysql.createConnection(urlDB);
+// const urlDB = `mysql://${process.env.MYSQLUSER}:${process.env.MYSQLPASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQLDATABASE}`;
+const db = mysql.createConnection({
+  host: "containers-us-west-17.railway.app",
+  user: "root",
+  password: "n7OAQdKkmhVlwkJkW2We",
+  database: "railway",
+});
 
 app.get("/", (req, res) => {
   db.query("SELECT * FROM user", (err, data) => {
