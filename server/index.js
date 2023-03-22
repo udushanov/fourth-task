@@ -61,6 +61,10 @@ app.post("/", (req, res) => {
         return res.status(400).json("Wrong password");
       }
 
+      if (data[0].status === "blocked") {
+        return res.status(400).json("User is blocked");
+      }
+
       res.status(200).json(data[0]);
     }
   );
@@ -85,7 +89,27 @@ app.get("/main", (req, res) => {
 });
 
 app.post("/main", (req, res) => {
-  res.status(200).json('User has been logged out')
+  res.status(200).json("User has been logged out");
+});
+
+app.patch("/main", (req, res) => {
+  db.query(
+    "UPDATE user SET status = ? WHERE id = ?",
+    [req.body.status, req.body.id],
+    (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res
+        .status(200)
+        .json("User has been blocked/unblocked successfully");
+    }
+  );
+});
+
+app.delete("/main", (req, res) => {
+  db.query("DELETE FROM user WHERE id = ?", [req.body.id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.json(data);
+  });
 });
 
 app.listen(process.env.PORT || 8800, () => {

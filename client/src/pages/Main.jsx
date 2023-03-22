@@ -24,6 +24,20 @@ export function Main() {
     const getUsers = async () => {
       try {
         const res = await axios.get("http://localhost:8800/main");
+        if (res.data.length === 0) {
+          navigate("/");
+        }
+
+        res.data.forEach(async (user) => {
+          if (user.status === "blocked") {
+            const active = JSON.parse(localStorage.getItem("user")).id;
+            if (user.id === active) {
+              await logout();
+              navigate("/");
+            }
+          }
+        });
+
         setUsers(res.data);
       } catch (err) {
         console.log(err);
@@ -60,6 +74,71 @@ export function Main() {
     return "";
   };
 
+  const handleBlock = (e) => {
+    e.preventDefault();
+    try {
+      users.forEach(async (user) => {
+        if (user.isChecked) {
+          await axios.patch("http://localhost:8800/main", {
+            id: user.id,
+            status: "blocked",
+          });
+        }
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  const handleUnblock = (e) => {
+    e.preventDefault();
+    try {
+      users.forEach(async (user) => {
+        if (user.isChecked) {
+          await axios.patch("http://localhost:8800/main", {
+            id: user.id,
+            status: "unblocked",
+          });
+        }
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    try {
+      users.forEach(async (user) => {
+        if (user.isChecked) {
+          const data = { id: user.id };
+          await axios.delete("http://localhost:8800/main", {
+            data,
+          });
+
+          const active = JSON.parse(localStorage.getItem("user")).id;
+          if (user.id === active) {
+            await logout();
+          }
+        }
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
   return (
     <>
       <Navbar
@@ -79,9 +158,13 @@ export function Main() {
       <Container style={{ marginTop: "80px" }}>
         <Row>
           <Col className="d-flex justify-content-end gap-2">
-            <Button>Block</Button>
-            <Button variant="success">Unblock</Button>
-            <Button variant="danger">Delete</Button>
+            <Button onClick={handleBlock}>Block</Button>
+            <Button variant="success" onClick={handleUnblock}>
+              Unblock
+            </Button>
+            <Button variant="danger" onClick={handleDelete}>
+              Delete
+            </Button>
           </Col>
         </Row>
         <Row>

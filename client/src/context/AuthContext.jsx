@@ -8,10 +8,6 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user") || null)
   );
 
-  // const [auth, setAuth] = useState(
-  //   JSON.parse(localStorage.getItem("auth") || false)
-  // );
-
   const login = async (inputs) => {
     const res = await axios.post("http://localhost:8800/", inputs);
     setCurenntUser(res.data);
