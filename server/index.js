@@ -16,11 +16,18 @@ dotenv.config();
 //   database: process.env.MYSQLDATABASE,
 // });
 
+// const db = mysql.createConnection({
+//   host: "containers-us-west-17.railway.app",
+//   user: "root",
+//   password: "n7OAQdKkmhVlwkJkW2We",
+//   database: "railway",
+// });
+
 const db = mysql.createConnection({
-  host: "containers-us-west-17.railway.app",
-  user: "root",
-  password: "n7OAQdKkmhVlwkJkW2We",
-  database: "railway",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 app.get("/", (req, res) => {
@@ -122,10 +129,10 @@ app.delete("/main", (req, res) => {
   });
 });
 
-// app.listen(process.env.MYSQLPORT || 8800, () => {
-//   console.log("The server is running");
-// });
-
-app.listen(6022 || 8800, () => {
+app.listen(process.env.PORT || 8800, () => {
   console.log("The server is running");
 });
+
+// app.listen(6022 || 8800, () => {
+//   console.log("The server is running");
+// });
