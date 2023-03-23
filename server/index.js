@@ -1,14 +1,19 @@
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 dotenv.config();
 
-// const urlDB = `mysql://${process.env.MYSQLUSER}:${process.env.MYSQLPASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQLDATABASE}`;
+// const url =
+//   "mysql://root:GzN171YIoK5LvpaSr5mc@containers-us-west-150.railway.app:6542/railway";
+const urlDB = `mysql://${process.env.MYSQLUSER}:${process.env.MYSQLPASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQLDATABASE}`;
+
+const db = mysql.createConnection(urlDB);
+
 // const db = mysql.createConnection({
 //   host: process.env.MYSQLHOST,
 //   user: process.env.MYSQLUSER,
@@ -23,19 +28,12 @@ dotenv.config();
 //   database: "railway",
 // });
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-});
-
-app.get("/", (req, res) => {
-  db.query("SELECT * FROM user", (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
-});
+// const db = mysql.createConnection({
+//   host: process.env.DB_HOST,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   database: process.env.DB_DATABASE,
+// });
 
 app.post("/register", (req, res) => {
   db.query(

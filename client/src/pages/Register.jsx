@@ -11,6 +11,8 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 
+const url = import.meta.env.VITE_REACT_SERVER_URL;
+
 export function Register() {
   const [inputs, setInputs] = useState({
     username: "",
@@ -29,7 +31,7 @@ export function Register() {
     e.preventDefault();
     try {
       setError("");
-      await axios.post(`${proccess.env.REACT_APP_SERVER_URL}/register`, {
+      await axios.post(`${url}/register`, {
         ...inputs,
         regisrtydate: new Date().toISOString().slice(0, 19).replace("T", " "),
         lastlogineddate: new Date()

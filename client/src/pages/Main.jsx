@@ -8,10 +8,11 @@ import {
   Container,
   Table,
   Navbar,
-  Nav,
   Button,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+
+const url = import.meta.env.VITE_REACT_SERVER_URL;
 
 export function Main() {
   const [users, setUsers] = useState([]);
@@ -23,9 +24,7 @@ export function Main() {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const res = await axios.get(
-          `${proccess.env.REACT_APP_SERVER_URL}/main`
-        );
+        const res = await axios.get(`${url}/main`);
         if (res.data.length === 0) {
           navigate("/");
         }
@@ -81,7 +80,7 @@ export function Main() {
     try {
       users.forEach(async (user) => {
         if (user.isChecked) {
-          await axios.patch(`${proccess.env.REACT_APP_SERVER_URL}/main`, {
+          await axios.patch(`${url}/main`, {
             id: user.id,
             status: "blocked",
           });
@@ -101,7 +100,7 @@ export function Main() {
     try {
       users.forEach(async (user) => {
         if (user.isChecked) {
-          await axios.patch(`${proccess.env.REACT_APP_SERVER_URL}/main`, {
+          await axios.patch(`${url}/main`, {
             id: user.id,
             status: "unblocked",
           });
@@ -122,7 +121,7 @@ export function Main() {
       users.forEach(async (user) => {
         if (user.isChecked) {
           const data = { id: user.id };
-          await axios.delete(`${proccess.env.REACT_APP_SERVER_URL}main`, {
+          await axios.delete(`${url}main`, {
             data,
           });
 

@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 
 export const AuthContext = createContext();
+const url = import.meta.env.VITE_REACT_SERVER_URL;
 
 export const AuthContextProvider = ({ children }) => {
   const [curenntUser, setCurenntUser] = useState(
@@ -9,16 +10,13 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   const login = async (inputs) => {
-    const res = await axios.post(
-      `${proccess.env.REACT_APP_SERVER_URL}/`,
-      inputs
-    );
+    const res = await axios.post(`${url}/`, inputs);
     setCurenntUser(res.data);
     localStorage.setItem("auth", true);
   };
 
   const logout = async () => {
-    await axios.post(`${proccess.env.REACT_APP_SERVER_URL}/main`);
+    await axios.post(`${url}/main`);
     setCurenntUser(null);
     localStorage.setItem("auth", false);
   };
@@ -29,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
         .toISOString()
         .slice(0, 19)
         .replace("T", " ");
-      await axios.patch(`${proccess.env.REACT_APP_SERVER_URL}/`, {
+      await axios.patch(`${url}/`, {
         id: curenntUser?.id,
         lastlogineddate,
       });
