@@ -30,6 +30,7 @@ export function Login() {
     e.preventDefault();
     try {
       setError("");
+      console.log(inputs);
       await login(inputs);
       navigate("/main");
     } catch (err) {
