@@ -11,6 +11,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const login = async (inputs) => {
     const res = await axios.post(`${url}/`, inputs);
+    console.log(res.data);
     setCurenntUser(res.data);
     localStorage.setItem("auth", true);
   };

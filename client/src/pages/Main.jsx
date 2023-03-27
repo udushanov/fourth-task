@@ -25,6 +25,7 @@ export function Main() {
     const getUsers = async () => {
       try {
         const res = await axios.get(`${url}/main`);
+        console.log(res.data)
         if (res.data.length === 0) {
           navigate("/");
         }
