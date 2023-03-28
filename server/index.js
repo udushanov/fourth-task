@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 dotenv.config();
 
-const urlDB = `mysql://${process.env.MYSQLUSER}:${process.env.MYSQLPASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQLDATABASE}`;
+const urlDB = `mysql://root:GzN171YIoK5LvpaSr5mc@containers-us-west-150.railway.app:6542/railway`;
 
 const db = mysql.createConnection(urlDB);
 
@@ -111,6 +111,6 @@ app.delete("/main", (req, res) => {
   });
 });
 
-app.listen(process.env.MYSQLPORT || 8800, () => {
+app.listen(6542 || 8800, () => {
   console.log(`The server is running`);
 });
