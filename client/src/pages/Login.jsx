@@ -33,7 +33,7 @@ export function Login() {
       await login(inputs);
       navigate("/main");
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data);
       setError(err.response.data);
     }
   };

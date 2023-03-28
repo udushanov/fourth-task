@@ -25,7 +25,6 @@ export function Main() {
     const getUsers = async () => {
       try {
         const res = await axios.get(`${url}/main`);
-        console.log(res.data)
         if (res.data.length === 0) {
           navigate("/");
         }
@@ -42,7 +41,7 @@ export function Main() {
 
         setUsers(res.data);
       } catch (err) {
-        console.log(err);
+        console.log(err.response.data);
       }
     };
 
@@ -122,7 +121,7 @@ export function Main() {
       users.forEach(async (user) => {
         if (user.isChecked) {
           const data = { id: user.id };
-          await axios.delete(`${url}main`, {
+          await axios.delete(`${url}/main`, {
             data,
           });
 

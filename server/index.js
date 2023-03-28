@@ -8,25 +8,9 @@ app.use(express.json());
 app.use(cors());
 dotenv.config();
 
-// const url =
-//   "mysql://root:GzN171YIoK5LvpaSr5mc@containers-us-west-150.railway.app:6542/railway";
 const urlDB = `mysql://${process.env.MYSQLUSER}:${process.env.MYSQLPASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQLDATABASE}`;
 
 const db = mysql.createConnection(urlDB);
-
-// const db = mysql.createConnection({
-//   host: process.env.MYSQLHOST,
-//   user: process.env.MYSQLUSER,
-//   password: process.env.MYSQLPASSWORD,
-//   database: process.env.MYSQLDATABASE,
-// });
-
-// const db = mysql.createConnection({
-//   host: "containers-us-west-17.railway.app",
-//   user: "root",
-//   password: "n7OAQdKkmhVlwkJkW2We",
-//   database: "railway",
-// });
 
 // const db = mysql.createConnection({
 //   host: process.env.DB_HOST,
@@ -127,10 +111,6 @@ app.delete("/main", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT || 8800, () => {
-  console.log("The server is running");
+app.listen(process.env.MYSQLPORT || 8800, () => {
+  console.log(`The server is running`);
 });
-
-// app.listen(6022 || 8800, () => {
-//   console.log("The server is running");
-// });
